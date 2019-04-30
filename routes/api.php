@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::resource('usuario', 'UsuarioController');
+// Route::resource('consulta', 'ConsultaController');
+// Route::resource('animal', 'AnimalController');
+// Route::resource('endereco', 'EnderecoController');
+// Route::resource('usuario-admin', 'UsuarioAdminController');
+
+Route::get('/usuario', 'UsuarioController@index');
+Route::post('/usuario', 'UsuarioController@CriarUsuario');
+Route::put('/usuario', 'UsuarioController@AtualizarValor');
+Route::delete('/usuario', 'UsuarioController@DeletarUsuario');
+
+Route::get('/', function() {
+    return response()->json(['message' => 'Jobs API', 'status' => 'Connected']);
 });
