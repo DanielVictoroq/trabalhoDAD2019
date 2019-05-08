@@ -18,11 +18,12 @@ use Illuminate\Http\Request;
 // Route::resource('animal', 'AnimalController');
 // Route::resource('endereco', 'EnderecoController');
 // Route::resource('usuario-admin', 'UsuarioAdminController');
-
-Route::get('/usuario', 'UsuarioController@index');
-Route::post('/usuario', 'UsuarioController@CriarUsuario');
-Route::put('/usuario', 'UsuarioController@AtualizarValor');
-Route::delete('/usuario', 'UsuarioController@DeletarUsuario');
+Route::group(['prefix' => 'usuario'], function () {
+    Route::get('/', 'UsuarioController@index');
+    Route::post('/', 'UsuarioController@CadastrarAssociado');
+    Route::put('/', 'UsuarioController@AlterarSenha');
+    Route::delete('/', 'UsuarioController@DeletarUsuario');
+});
 
 Route::get('/', function() {
     return response()->json(['message' => 'Jobs API', 'status' => 'Connected']);
