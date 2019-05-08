@@ -11,7 +11,7 @@ class Endereco extends Model
     public $incrementing = false;
     
     protected $fillable = [
-        'logradouro', 'bairro', 'numero','cidade', 'estado', 'cep'
+        'id_endereco','logradouro', 'bairro', 'numero','cidade', 'estado', 'cep'
     ];
     
     protected $primaryKey = 'id_endereco';
