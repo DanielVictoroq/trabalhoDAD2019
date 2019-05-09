@@ -19,8 +19,8 @@ class Consulta extends Model
     function animal() {
         return $this->belongsTo('App\Animal','id_animal');
     }
-    function cliente() {
-        return $this->belongsTo('App\Cliente','nome_usuario');
+    function usuario() {
+        return $this->belongsTo('App\Usuario','nome_usuario');
     }
     function admin() {
         return $this->belongsTo('App\UsuarioAdmin','nome_usuario');

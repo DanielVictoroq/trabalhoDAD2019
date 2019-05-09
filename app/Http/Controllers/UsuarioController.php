@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\EnderecoController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -12,9 +13,26 @@ use DB;
 
 class UsuarioController extends Controller
 {
+    private $enderecoController;
+
+    public function __construct(EnderecoController $enderecoController){
+        $this->enderecoController = $enderecoController;
+    }
+
     public function index(){
-        $data = Usuario::with('endereco')->get();
-        return response()->json($data);
+        // $data = Usuario::with('endereco')->get();
+        
+        $usuario = Usuario::where('nome_usuario' ,'danielvqw')->where('senha','$2y$10$VNn6iRrtAdOszN4lRxYsSuBRRcOAnHHo.vRSO.4vghiU/Z7yCC02.')->get();
+        if(isset($usuario[0])){
+
+            return response($usuario);
+        }
+        else{
+            
+            return response()->json(["dasdasdas", $usuario]);
+        }
+        
+        return response()->json($dados);
     }
     
     public function validation($request){
@@ -38,17 +56,7 @@ class UsuarioController extends Controller
     }
     
     public function CadastrarAssociado(Request $request){
-        $endereco = Endereco::create([
-            'logradouro' => $request->input('logradouro'),
-            'bairro' => $request->input('bairro'),
-            'cidade' => $request->input('cidade'),
-            'estado' => $request->input('estado'),
-            'cep' => $request->input('cep'),
-            'numero' => $request->input('numero'),
-            ]
-        );
-        
-        $id = DB::getPDO()->lastInsertId();
+        $endereco = $this->enderecoController->CadastrarEndereco($request);
         if($endereco){
             $data = new Usuario();
             $data->fill([
@@ -60,7 +68,7 @@ class UsuarioController extends Controller
                 'email' => $request->input('email'),
                 'senha' => Hash::make($request->input('password')),
                 'qtdanimais'=> $request->input('qtdanimais'),
-                'id_endereco'=> $id
+                'id_endereco'=> $endereco
                 ]
             );
             
@@ -73,19 +81,60 @@ class UsuarioController extends Controller
         
     }
     public function AlterarSenha(Request $request){
+        
+        $data = Usuario::find($request->input('nome_usuario'));
+        if($data){
+            $data->senha =  Hash::make($request->input('password'));
+            if($data->save()){
+                return response()->json(['code'=> '200 ', 'message'=>'Alterado com Sucesso']);
+            }
+        }
+        else{
+            return response()->json(['code'=> '400 ', 'message'=>'Usuário não existe']);
+        }
+        
+    }
+    public function RealizarLogin(Request $request){
+        
+        if(!$request->input('nome_usuario') || !$request->input('senha')){
+            return response()->json(['code'=> '400 ', 'message'=>'Usuário e senha não encontrados']);
+        }
 
-        $data = Usuario::where('nome_usuario', $request->input('nome_usuario'))->update([$request]);
+        $usuario = Usuario::where('nome_usuario' , $request->input('nome_usuario'))->where('senha', Hash::make($request->input('password')))->get();
+        if(!isset($usuario[0])){
+            return response()->json(['code'=> '400 ', 'message'=>'Usuário e senha não encontrados']);
+        }
+        $data = Usuario::with('endereco', 'animal.consulta', 'consulta')->get()->find($request->input('nome_usuario'));
 
         if($data){
-            return response()->json(['code'=> '200 ', 'message'=>'Alterado com Sucesso']);
+            $dados = [
+                'nome' => $data->nome,
+                'sobrenome' => $data->sobrenome,
+                'data_nascimento' => $data->data_nascimento,
+                'cpf' => $data->cpf,
+                'email' => $data->email,
+                'qtdanimais' => $data->qtdanimais,
+                'logradouro' => $data->endereco->logradouro,
+                'bairro' => $data->endereco->bairro,
+                'cidade' => $data->endereco->cidade,
+                'estado' => $data->endereco->estado,
+                'cep' => $data->endereco->cep,
+                'animal' => [
+                    'nome' => $data->animal[0]->nome,
+                    'historico' => $data->animal[0]->historico,
+                    'data_nascimento' => $data->animal[0]->data_nascimento,
+                ],
+                'consulta' => [
+                    'status' => $data->consulta[0]->cidade,
+                    'observacoes' => $data->consulta[0]->observacoes,
+                    'data_hora' => $data->consulta[0]->data_hora,
+                    'admin' =>  $data->consulta[0]->admin,
+                ],
+            ];
+            return response()->json(['code'=> '200 ', 'dados'=> $dados]);
         }
-    }
-    public function RealizarLogin(){
-        $data = Usuario::with('endereco')->get();
-        return response()->json($data);
-    }
-    public function logout(){
-        $data = Usuario::with('endereco')->get();
-        return response()->json($data);
+        else{
+            return response()->json(['code'=> '400 ', 'message'=>'Usuário e senha não encontrados']);
+        }
     }
 }

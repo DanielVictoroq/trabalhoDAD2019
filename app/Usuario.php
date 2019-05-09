@@ -19,6 +19,12 @@ class Usuario extends Model
     function endereco() {
         return $this->belongsTo('App\Endereco','id_endereco');
     }
+    function animal() {
+        return $this->hasMany('App\Animal','nome_usuario');
+    }
+    function consulta() {
+        return $this->hasMany('App\Consulta','cliente');
+    }
     function admin() {
         return $this->hasMany('App\Admin','nome_usuario');
     }
