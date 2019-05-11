@@ -23,7 +23,7 @@ class Usuario extends Migration
             $table->string('email', 100);
             $table->string('senha', 100);
             $table->integer('qtdanimais');
-            $table->integer('id_endereco');
+            $table->unsignedBigInteger('id_endereco');
             $table->foreign('id_endereco')->references('id_endereco')->on('endereco');
             $table->timestamps();
          });

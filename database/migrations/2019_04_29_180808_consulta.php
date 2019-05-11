@@ -20,7 +20,7 @@ class Consulta extends Migration
             $table->date('data_hora');
             $table->string('admin', 100);
             $table->string('cliente', 100);
-            $table->integer('id_animal');
+            $table->unsignedBigInteger('id_animal');
             $table->foreign('admin')->references('nome_usuario')->on('admin');
             $table->foreign('cliente')->references('nome_usuario')->on('usuario');
             $table->foreign('id_animal')->references('id_animal')->on('animal');
