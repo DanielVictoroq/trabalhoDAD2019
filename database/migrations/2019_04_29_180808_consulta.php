@@ -21,7 +21,7 @@ class Consulta extends Migration
             $table->string('admin', 100);
             $table->string('cliente', 100);
             $table->integer('id_animal');
-            $table->foreign('admin')->references('nome_usuario')->on('admin');
+            $table->foreign('admin')->references('nome_usuario')->on('admin')->nullable();
             $table->foreign('cliente')->references('nome_usuario')->on('usuario');
             $table->foreign('id_animal')->references('id_animal')->on('animal');
             $table->timestamps();
