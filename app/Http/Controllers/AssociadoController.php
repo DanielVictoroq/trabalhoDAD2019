@@ -12,7 +12,6 @@ class AssociadoController extends Controller
 {
     
     private $enderecoController;
-    private $adminController;
     
     public function __construct(EnderecoController $enderecoController){
         $this->enderecoController = $enderecoController;

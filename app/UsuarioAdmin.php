@@ -19,5 +19,8 @@ class UsuarioAdmin extends Model
     function usuario() {
         return $this->belongsTo('App\Usuario','nome_usuario');
     }
+    function consulta() {
+        return $this->hasMany('App\Consulta','admin');
+    }
 
 }

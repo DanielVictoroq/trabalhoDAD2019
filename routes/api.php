@@ -9,12 +9,15 @@ Route::group(['prefix' => 'usuario'], function () {
     Route::post('/consultar', 'ConsultaController@CadastrarConsulta');
     Route::put('/', 'UsuarioController@AlterarSenha');
 });
+Route::group(['prefix' => 'animal'], function () {
+    Route::get('/', 'AnimalController@index');
+    Route::post('/', 'AnimalController@CadastrarAssociado');
+    Route::delete('/', 'AnimalController@RetirarAnimal');
+});
 
 Route::group(['prefix' => 'gestor'], function () {
     Route::get('/consultas', 'ConsultaController@index');
     Route::get('/consulta', 'ConsultaController@ConsultarConsultas');
-    Route::get('/relatorio-consulta', 'ConsultaController@ConsultarRelatoriosdeConsultas');
-    Route::get('/gerar-relatorio', 'ConsultaController@GerarRelatorio');
     Route::post('/efetuar-consulta', 'ConsultaController@EfetuarConsulta');
     Route::post('/', 'UsuarioAdminController@CadastrarGestor');
 });

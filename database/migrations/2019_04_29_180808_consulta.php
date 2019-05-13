@@ -16,7 +16,7 @@ class Consulta extends Migration
         Schema::create('consulta', function (Blueprint $table) {
             $table->bigIncrements('id_consulta');
             $table->string('status', 100);
-            $table->longText('observacoes');
+            $table->longText('observacoes')->nullable();
             $table->date('data_hora');
             $table->string('admin', 100);
             $table->string('cliente', 100);
