@@ -11,4 +11,7 @@
 |
 */
 
-Route::post('/usuario/teste', 'UsuarioController@CadastrarAssociado');
+Route::get('/', function(){
+    
+    return view('welcome');
+});

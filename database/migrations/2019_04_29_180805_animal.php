@@ -14,7 +14,7 @@ class Animal extends Migration
     public function up()
     {
         Schema::create('animal', function (Blueprint $table) {
-            $table->bigIncrements('id_animal', 100);
+            $table->bigIncrements('id_animal');
             $table->string('nome', 100);
             $table->longText('historico', 100)->nullable();
             $table->date('data_nascimento');
