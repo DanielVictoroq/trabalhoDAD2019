@@ -23,7 +23,7 @@ class Usuario extends Model
         return $this->hasMany('App\Animal','nome_usuario');
     }
     function consulta() {
-        return $this->hasMany('App\Consulta','cliente');
+        return $this->hasMany('App\Consulta','nome_usuario');
     }
     function admin() {
         return $this->hasMany('App\Admin','nome_usuario');

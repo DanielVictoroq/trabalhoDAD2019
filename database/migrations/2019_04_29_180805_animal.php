@@ -16,7 +16,7 @@ class Animal extends Migration
         Schema::create('animal', function (Blueprint $table) {
             $table->bigIncrements('id_animal');
             $table->string('nome', 100);
-            $table->longText('historico', 100);
+            $table->longText('historico', 100)->nullable();
             $table->date('data_nascimento');
             $table->string('nome_usuario', 100);
             $table->foreign('nome_usuario')->references('nome_usuario')->on('usuario');

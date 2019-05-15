@@ -16,12 +16,17 @@ class Consulta extends Migration
         Schema::create('consulta', function (Blueprint $table) {
             $table->bigIncrements('id_consulta');
             $table->string('status', 100);
-            $table->longText('observacoes');
+            $table->longText('observacoes')->nullable();
             $table->date('data_hora');
             $table->string('admin', 100);
             $table->string('cliente', 100);
+<<<<<<< HEAD
+            $table->integer('id_animal');
+            $table->foreign('admin')->references('nome_usuario')->on('admin')->nullable();
+=======
             $table->unsignedBigInteger('id_animal');
             $table->foreign('admin')->references('nome_usuario')->on('admin');
+>>>>>>> ae4b53a63a36d2b1584c6ba7fa3385ec29acb076
             $table->foreign('cliente')->references('nome_usuario')->on('usuario');
             $table->foreign('id_animal')->references('id_animal')->on('animal');
             $table->timestamps();

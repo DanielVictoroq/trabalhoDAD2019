@@ -4,16 +4,22 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'usuario'], function () {
     Route::get('/', 'UsuarioController@index');
-    Route::post('/', 'UsuarioController@CadastrarAssociado');
+    Route::post('/', 'AssociadoController@CadastrarAssociado');
     Route::post('/login', 'UsuarioController@RealizarLogin');
+    Route::post('/consultar', 'ConsultaController@CadastrarConsulta');
     Route::put('/', 'UsuarioController@AlterarSenha');
+});
+Route::group(['prefix' => 'animal'], function () {
+    Route::get('/', 'AnimalController@index');
+    Route::post('/', 'AnimalController@CadastrarAssociado');
+    Route::delete('/', 'AnimalController@RetirarAnimal');
 });
 
 Route::group(['prefix' => 'gestor'], function () {
-    Route::get('/', 'UsuarioAdminController@index');
-    Route::post('/', 'UsuarioAdminController@CadastrarAssociado');
-    Route::post('/login', 'UsuarioAdminController@RealizarLogin');
-    Route::put('/', 'UsuarioAdminController@AlterarSenha');
+    Route::get('/consultas', 'ConsultaController@index');
+    Route::get('/consulta', 'ConsultaController@ConsultarConsultas');
+    Route::post('/efetuar-consulta', 'ConsultaController@EfetuarConsulta');
+    Route::post('/', 'UsuarioAdminController@CadastrarGestor');
 });
 
 Route::get('/', function() {

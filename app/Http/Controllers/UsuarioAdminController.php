@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class UsuarioAdminController extends Controller
 {
-       public function CadastrarGestor(Request $request){
+    public function CadastrarGestor(Request $request){
         $data = new Usuario();
         
         $data->fill([
@@ -21,4 +21,5 @@ class UsuarioAdminController extends Controller
             ]
         );
     }
+
 }
