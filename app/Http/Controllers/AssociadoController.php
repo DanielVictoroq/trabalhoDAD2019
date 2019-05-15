@@ -35,11 +35,11 @@ class AssociadoController extends Controller
             );
             
             if($data->save()){
-                return response()->json(['code'=> '200 ', 'message'=>'Usuário Cadastrado com Sucesso']);
+                return response()->json(['code'=> 200 , 'message'=>'Usuário Cadastrado com Sucesso']);
             }
         }
         
-        return response()->json(['code'=> '400 ', 'message'=>'Erro ao cadastrar Usuário']);
+        return response()->json(['code'=> 400 , 'message'=>'Erro ao cadastrar Usuário']);
         
     }
 }

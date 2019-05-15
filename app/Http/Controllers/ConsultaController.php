@@ -8,14 +8,14 @@ use App\Usuario;
 class ConsultaController extends Controller
 {
     public function index(Request $request){
-        $dados = Consulta::with(['animal','usuario','admins.usuario']);
+        $dados = Consulta::with(['animal','usuario','admins.usuario'])->get();
         return response()->json($dados);    
     }
     
     public function ConsultarConsultas(Request $request){
         $dados = Consulta::with(['animal','usuario','admins.usuario'])->find($request->input('id')); 
         if($dados){
-            return response()->json(['code'=> 400 , 'dados' =>$dados]);   
+            return response()->json(['code'=> 200,'dados' =>$dados]);   
         }
         return response()->json(['code'=> 400 , 'message' => 'Consulta não encontrada']);   
     }
@@ -33,10 +33,10 @@ class ConsultaController extends Controller
         );
         
         if($data->save()){
-            return response()->json(['code'=> '200 ', 'message'=>'Consulta registrada com sucesso']);
+            return response()->json(['code'=> 200, 'message'=>'Consulta registrada com sucesso']);
         }
         
-        return response()->json(['code'=> '400 ', 'message'=>'Erro ao registrar consulta']);
+        return response()->json(['code'=> 400, 'message'=>'Erro ao registrar consulta']);
     }
     
     public function EfetuarConsulta(Request $request){
@@ -48,11 +48,11 @@ class ConsultaController extends Controller
             $data->status =  'F';
 
             if($data->save()){
-                return response()->json(['code'=> '200 ', 'message'=>'Consulta Efetuada com Sucesso']);
+                return response()->json(['code'=> 200 , 'message'=>'Consulta Efetuada com Sucesso']);
             }
         }
         else{
-            return response()->json(['code'=> '400 ', 'message'=>'Erro ao concluir a consulta']);
+            return response()->json(['code'=> 400 , 'message'=>'Erro ao concluir a consulta']);
         }
     }
 }
