@@ -16,10 +16,10 @@ class UsuarioController extends Controller
         $data = Usuario::with('endereco')->get()->find($usuario);
         if(!$data){
 
-            return response()->json(['code'=> '200 ', 'message'=>'Usuario não existe em nossa base de dados']);
+            return response()->json(['code'=> 200 , 'message'=>'Usuario não existe em nossa base de dados']);
         }   
 
-        return response()->json(['code'=> '400 ', 'message'=>'Usuário Existente']);
+        return response()->json(['code'=> 400 , 'message'=>'Usuário Existente']);
     }
     
     public function validation($request){
@@ -48,26 +48,26 @@ class UsuarioController extends Controller
         if($data){
             $data->senha =  Hash::make($request->input('senha'));
             if($data->save()){
-                return response()->json(['code'=> '200 ', 'message'=>'Alterado com Sucesso']);
+                return response()->json(['code'=> 200 , 'message'=>'Alterado com Sucesso']);
             }
         }
         else{
-            return response()->json(['code'=> '400 ', 'message'=>'Usuário não existe']);
+            return response()->json(['code'=> 400 , 'message'=>'Usuário não existe']);
         }
         
     }
     public function RealizarLogin(Request $request){
         
         if(!$request->input('nome_usuario') || !$request->input('senha')){
-            return response()->json(['code'=> '400 ', 'message'=>'Usuário e senha não foram informados']);
+            return response()->json(['code'=> 400 , 'message'=>'Usuário e senha não foram informados']);
         }
         
         $usuario = Usuario::find($request->input('nome_usuario'));
         if(!$usuario){
-            return response()->json(['code'=> '400 ', 'message'=>'Usuário não encontrado']);
+            return response()->json(['code'=> 400 , 'message'=>'Usuário não encontrado']);
         }
         else if(!Hash::check($request->input('senha'), $usuario->senha)){
-            return response()->json(['code'=> '400 ', 'message'=>'Senha Incorreta']);
+            return response()->json(['code'=> 400 , 'message'=>'Senha Incorreta']);
         }
         $data = Usuario::with('endereco', 'animal.consulta', 'consulta')->get()->find($request->input('nome_usuario'));
         
@@ -101,10 +101,10 @@ class UsuarioController extends Controller
                     'admin' =>  $data->consulta[0]->admin,
                 ];
             }
-            return response()->json(['code'=> '200 ', 'dados'=> $dados]);
+            return response()->json(['code'=> 200 , 'dados'=> $dados]);
         }
         else{
-            return response()->json(['code'=> '400 ', 'message'=>'Erro ao buscar dados no banco']);
+            return response()->json(['code'=> 400 , 'message'=>'Erro ao buscar dados no banco']);
         }
     }
 }
