@@ -11,7 +11,7 @@ class UsuarioAdmin extends Model
     public $incrementing = false;
     
     protected $fillable = [
-        'CRMV', 'matricula',
+       'nome_usuario', 'CRMV', 'matricula',
     ];
     
     protected $primaryKey = 'nome_usuario';
