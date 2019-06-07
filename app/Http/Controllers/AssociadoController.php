@@ -28,7 +28,7 @@ class AssociadoController extends Controller
                 'cpf' => $request->input('cpf'),
                 'data_nascimento' => $request->input('data_nascimento'),
                 'email' => $request->input('email'),
-                'senha' => Hash::make($request->input('password')),
+                'senha' => Hash::make($request->input('senha')),
                 'qtdanimais'=> $request->input('qtdanimais'),
                 'id_endereco'=> $endereco
                 ]

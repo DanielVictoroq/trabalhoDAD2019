@@ -10,7 +10,6 @@ use App\Usuario;
 
 class UsuarioController extends Controller
 {
-    
     public function index(Request $request){
         $usuario = $request->input('usuario');
         $data = Usuario::with('endereco')->get()->find($usuario);
@@ -84,8 +83,16 @@ class UsuarioController extends Controller
                 'cidade' => $data->endereco->cidade,
                 'estado' => $data->endereco->estado,
                 'cep' => $data->endereco->cep,
-                'admin' => UsuarioAdmin::find($request->input('nome_usuario')) ? true : false,
+                'numero' => $data->endereco->numero,
+                'admin' => false,
+                
             ];
+            if(UsuarioAdmin::find($request->input('nome_usuario'))){
+                $dados['admin'] = true;
+                $dado = Usuario::with('admin')->get()->find($request->input('nome_usuario'));
+                $dados['adminDados'] = $dado->admin;
+            }
+            
             if(isset($data->animal[0])){
                 $dados['animal'] =[
                     'nome' => $data->animal[0]->nome,
