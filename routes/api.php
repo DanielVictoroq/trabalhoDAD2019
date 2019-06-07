@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'usuario'], function () {
-    Route::get('/', 'UsuarioController@index');
-    Route::post('/', 'AssociadoController@CadastrarAssociado');
+    Route::post('/', 'UsuarioController@index');
+    Route::post('/cadastro', 'AssociadoController@CadastrarAssociado');
     Route::post('/login', 'UsuarioController@RealizarLogin');
     Route::post('/consultar', 'ConsultaController@CadastrarConsulta');
     Route::put('/', 'UsuarioController@AlterarSenha');
@@ -22,6 +22,4 @@ Route::group(['prefix' => 'gestor'], function () {
     Route::post('/', 'UsuarioAdminController@CadastrarGestor');
 });
 
-Route::get('/', function() {
-    return response()->json(['message' => 'Jobs API', 'status' => 'Connected']);
-});
+Route::post('/u','UsuarioController@index');
