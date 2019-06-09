@@ -7,8 +7,8 @@ use App\Animal;
 
 class AnimalController extends Controller
 {
-    public function index(){
-        $dados = Animal::with(['usuario'])->get();
+    public function index(Request $request){
+        $dados = Animal::with(['usuario'])->get()->find($request->input('nome_usuario'));
         return response()->json($dados);    
     }
     

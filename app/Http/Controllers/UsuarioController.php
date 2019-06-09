@@ -68,10 +68,11 @@ class UsuarioController extends Controller
         else if(!Hash::check($request->input('senha'), $usuario->senha)){
             return response()->json(['code'=> 400 , 'message'=>'Senha Incorreta']);
         }
-        $data = Usuario::with('endereco', 'animal.consulta', 'consulta')->get()->find($request->input('nome_usuario'));
+        $data = Usuario::with('endereco','animal.consulta', 'consulta')->get()->find($request->input('nome_usuario'));
         
         if($data){
             $dados = [
+                'nome_usuario' => $data->nome_usuario,
                 'nome' => $data->nome,
                 'sobrenome' => $data->sobrenome,
                 'data_nascimento' => $data->data_nascimento,
