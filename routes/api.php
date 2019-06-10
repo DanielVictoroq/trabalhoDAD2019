@@ -11,7 +11,7 @@ Route::group(['prefix' => 'usuario'], function () {
 });
 Route::group(['prefix' => 'animal'], function () {
     Route::get('/', 'AnimalController@index');
-    Route::post('/', 'AnimalController@CadastrarAssociado');
+    Route::post('/', 'AnimalController@CadastrarAnimal');
     Route::delete('/', 'AnimalController@RetirarAnimal');
 });
 

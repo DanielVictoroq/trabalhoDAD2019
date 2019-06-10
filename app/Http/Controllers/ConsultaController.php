@@ -33,7 +33,10 @@ class ConsultaController extends Controller
         );
         
         if($data->save()){
-            return response()->json(['code'=> 200, 'message'=>'Consulta registrada com sucesso']);
+            $dados = Usuario::with(['consulta'])->get()->find($request->input('nome_usuario'));
+
+            return response()->json(['code'=> 200, 'message'=>'Consulta registrada com sucesso', 
+            'dados' => $dados->consulta[0]]);
         }
         
         return response()->json(['code'=> 400, 'message'=>'Erro ao registrar consulta']);
