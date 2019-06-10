@@ -14,10 +14,10 @@ class UsuarioController extends Controller
         $usuario = $request->input('usuario');
         $data = Usuario::with('endereco')->get()->find($usuario);
         if(!$data){
-
+            
             return response()->json(['code'=> 200 , 'message'=>'Usuario não existe em nossa base de dados']);
         }   
-
+        
         return response()->json(['code'=> 400 , 'message'=>'Usuário Existente']);
     }
     
@@ -69,6 +69,7 @@ class UsuarioController extends Controller
             return response()->json(['code'=> 400 , 'message'=>'Senha Incorreta']);
         }
         $data = Usuario::with('endereco','animal.consulta', 'consulta')->get()->find($request->input('nome_usuario'));
+        $dataAnimal = Usuario::with('animal')->get()->find($request->input('nome_usuario'));
         
         if($data){
             $dados = [
@@ -94,12 +95,15 @@ class UsuarioController extends Controller
                 $dados['adminDados'] = $dado->admin;
             }
             
-            if(isset($data->animal[0])){
-                $dados['animal'] =[
-                    'nome' => $data->animal[0]->nome,
-                    'historico' => $data->animal[0]->historico,
-                    'data_nascimento' => $data->animal[0]->data_nascimento,
-                ];
+            if(isset($data->animal)){
+                foreach($data->animal as $value){
+                    $dados['animal'][] =[
+                        'nome' => $value->nome,
+                        'historico' => $value->historico,
+                        'data_nascimento' => $value->data_nascimento,
+                        'id' => $value->id_animal,
+                    ];
+                }    
             }
             if(isset($data->consulta[0])){
                 $dados['consulta'] = [
