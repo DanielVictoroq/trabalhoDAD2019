@@ -9,12 +9,21 @@ class ConsultaController extends Controller
 {
     public function index(Request $request){
         $dados = Consulta::with(['animal','usuario','admins.usuario'])->get();
-        return response()->json($dados);    
+        $data = [];
+        if($dados){
+            foreach($dados as $valor){
+                if($valor->status == "A"){
+                    $data[] = $valor;
+                }
+            } 
+        }
+        return response()->json($data);    
     }
     
     public function ConsultarConsultas(Request $request){
-        $dados = Consulta::with(['animal','usuario','admins.usuario'])->find($request->input('id')); 
+        $dados = Consulta::with(['animal','usuario','admins.usuario'])->find($request->input('id'));
         if($dados){
+
             return response()->json(['code'=> 200,'dados' =>$dados]);   
         }
         return response()->json(['code'=> 400 , 'message' => 'Consulta não encontrada']);   
