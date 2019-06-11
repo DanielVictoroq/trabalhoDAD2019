@@ -8,6 +8,7 @@ Route::group(['prefix' => 'usuario'], function () {
     Route::post('/login', 'UsuarioController@RealizarLogin');
     Route::post('/consultar', 'ConsultaController@CadastrarConsulta');
     Route::put('/', 'UsuarioController@AlterarSenha');
+    Route::get('/get','UsuarioController@buscarUsuarios');
 });
 Route::group(['prefix' => 'animal'], function () {
     Route::get('/', 'AnimalController@index');

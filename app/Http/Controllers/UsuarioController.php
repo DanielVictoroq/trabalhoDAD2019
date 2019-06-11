@@ -20,6 +20,10 @@ class UsuarioController extends Controller
         
         return response()->json(['code'=> 400 , 'message'=>'Usuário Existente']);
     }
+    public function buscarUsuarios(){
+        $data = Usuario::get();
+        return response()->json(['code'=> 200 , 'dados'=>$data]);
+    }
     
     public function validation($request){
         
